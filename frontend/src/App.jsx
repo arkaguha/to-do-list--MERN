@@ -1,5 +1,5 @@
 // App.jsx
-
+import "./App.css";
 import { useEffect, useState } from "react";
 import axios from "axios";
 const BASE_API = "http://localhost:3000";
@@ -11,10 +11,16 @@ export default function App() {
   const [listTitle, setListTitle] = useState("");
   const [listContent, setListContent] = useState("");
   const [editId, setEditId] = useState(null);
+  const [activeId, setActiveId] = useState(null);
+  const [showForm, setShowForm] = useState(false); // 👈 modal toggle
 
   useEffect(() => {
     fetchTodos();
   }, []);
+
+  const handleActive = (id) => {
+    setActiveId(activeId === id ? null : id);
+  };
 
   const fetchTodos = async () => {
     try {
@@ -29,7 +35,10 @@ export default function App() {
     try {
       let res = await axios.delete(`${BASE_API}/lists/${id}`);
       console.log(res);
-
+      if (id === editId) {
+        cancelEdit();
+      }
+      alert("deleted");
       fetchTodos();
     } catch (error) {
       console.log(error);
@@ -41,6 +50,10 @@ export default function App() {
     setListTitle(list_title);
     setListContent(list_content);
     setEditId(id);
+    setShowForm(true); // open modal when editing
+    if (id !== activeId) {
+      handleActive(id);
+    }
   }
 
   // ✅ Add or Update Todo
@@ -65,6 +78,7 @@ export default function App() {
       fetchTodos();
       setListTitle("");
       setListContent("");
+      setShowForm(false); // close modal after save
     } catch (error) {
       console.error(
         "Error saving list:",
@@ -77,24 +91,45 @@ export default function App() {
     setEditId(null);
     setListTitle("");
     setListContent("");
+    setActiveId(null);
+    setShowForm(false); // close modal
   };
 
   return (
-    <>
-      <div>
-        <TodoForm
-          editId={editId}
-          listTitle={listTitle}
-          listContent={listContent}
-          setListTitle={setListTitle}
-          setListContent={setListContent}
-          saveTodo={saveTodo}
-          cancelEdit={cancelEdit}
-        />
-      </div>
-      <div>
-        <Todo editTodo={editTodo} deleteTodo={deleteTodo} lists={lists} />
-      </div>
-    </>
+    <div className="app">
+      <Todo
+        editTodo={editTodo}
+        deleteTodo={deleteTodo}
+        lists={lists}
+        activeId={activeId}
+        setActiveId={setActiveId}
+        handleActive={handleActive}
+      />
+
+      {/* ✅ Floating Add Button */}
+      <button className="fab" onClick={() => setShowForm(true)}>
+        ＋
+      </button>
+
+      {/* ✅ Modal TodoForm */}
+      {showForm && (
+        <div className="modal-overlay" onClick={cancelEdit}>
+          <div
+            className="modal-content"
+            onClick={(e) => e.stopPropagation()} // prevent close on form click
+          >
+            <TodoForm
+              editId={editId}
+              listTitle={listTitle}
+              listContent={listContent}
+              setListTitle={setListTitle}
+              setListContent={setListContent}
+              saveTodo={saveTodo}
+              cancelEdit={cancelEdit}
+            />
+          </div>
+        </div>
+      )}
+    </div>
   );
 }

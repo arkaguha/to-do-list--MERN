@@ -1,0 +1,98 @@
+/* Base form card */
+.todo-form {
+  flex: 1;
+  margin: 10px;
+  padding: 20px;
+  border: 1px solid bisque;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  opacity: 0;
+  transform: translateX(50px); /* start slightly right */
+  transition: all 0.4s ease;
+}
+
+/* Fade-in + reset transform when visible */
+.todo-form.editing {
+  background: #fff4e6;
+  border-color: #f4a261;
+  box-shadow: 0 4px 12px rgba(244, 162, 97, 0.4);
+}
+
+/* Slide-in animation */
+.todo-form.slide-in {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Header */
+.form-header {
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+/* Inputs */
+.todo-form input,
+.todo-form textarea {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: border 0.2s ease, box-shadow 0.2s ease;
+}
+
+.todo-form input:focus,
+.todo-form textarea:focus {
+  border-color: #f4a261;
+  box-shadow: 0 0 5px rgba(244, 162, 97, 0.5);
+  outline: none;
+}
+
+/* Textarea sizing */
+.todo-form textarea {
+  resize: vertical;
+  min-height: 80px;
+  max-height: 200px;
+}
+
+/* Buttons */
+.form-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+button.primary {
+  background: #f4a261;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+button.primary:hover {
+  background: #e76f51;
+  transform: scale(1.05);
+}
+
+button.secondary {
+  background: #ddd;
+  color: #333;
+  padding: 8px 14px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+button.secondary:hover {
+  background: #bbb;
+  transform: scale(1.05);
+}

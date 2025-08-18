@@ -1,3 +1,5 @@
+import "./TodoForm.css";
+
 export default function TodoForm({
   editId,
   listTitle,
@@ -8,9 +10,13 @@ export default function TodoForm({
   cancelEdit,
 }) {
   return (
-    <div>
-      <p>To-Do List:</p>
-      {editId ? <p>Editing...{listTitle}</p> : <p>Add new to-do</p>}
+    <div className={`todo-form slide-in ${editId ? "editing" : ""}`}>
+      {editId ? (
+        <p className="form-header">Editing: {listTitle}</p>
+      ) : (
+        <p className="form-header">Add new to-do</p>
+      )}
+
       <input
         type="text"
         placeholder="Title"
@@ -22,8 +28,17 @@ export default function TodoForm({
         onChange={(e) => setListContent(e.target.value)}
         value={listContent}
       />
-      <button onClick={saveTodo}>{editId ? "Save" : "Add"}</button>
-      {editId ? <button onClick={cancelEdit}>Cancel</button> : ""}
+
+      <div className="form-buttons">
+        <button className="primary" onClick={saveTodo}>
+          {editId ? "Save" : "Add"}
+        </button>
+        {
+          /*editId && */ <button className="secondary" onClick={cancelEdit}>
+            Cancel
+          </button>
+        }
+      </div>
     </div>
   );
 }

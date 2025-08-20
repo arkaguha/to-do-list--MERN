@@ -1,11 +1,12 @@
 /* ====== Container & Header ====== */
 .todos-container {
-  width: 50%;
-  margin: auto;
-  border: 1px solid bisque;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  background: #fff;
+  width: 95%;
+  margin: 20px auto;
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px var(--shadow);
+  background: var(--card-bg);
+  color: var(--text);
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -13,14 +14,14 @@
 
 .todos-header {
   text-align: center;
-  font-size: 1.5rem;
-  font-weight: bold;
+  font-size: 1.4rem;
+  font-weight: 800;
   padding: 12px;
-  background: #f9f4ef;
-  border-bottom: 2px solid #e6ccb2;
+  background: var(--header-bg);
+  border-bottom: 2px solid var(--header-border);
   position: sticky;
   top: 0;
-  z-index: 2;
+  /* z-index: 1; */
 }
 
 /* ====== Scrollable Todo List ====== */
@@ -33,32 +34,43 @@
 .empty {
   text-align: center;
   padding: 20px;
-  color: gray;
+  color: var(--muted);
+}
+
+ol {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  /* gap: 3%; */
+  justify-content: space-around;
 }
 
 /* ====== List Item Card ====== */
 .list-items {
-  background: #fafafa;
-  border: 1px solid #eee;
-  border-radius: 8px;
+  width: 45%;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
   margin-bottom: 12px;
   padding: 12px;
-  transition: all 0.3s ease;
+  transition: background 0.25s ease, border-color 0.25s ease,
+    box-shadow 0.25s ease, transform 0.2s ease;
   cursor: pointer;
   opacity: 0;
   animation: fadeIn 0.5s forwards;
+  /* display: flex; */
 }
 
 .list-items:hover {
-  background: #f1f1f1;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+  background: var(--card-hover-bg);
+  box-shadow: 0 3px 10px var(--shadow);
 }
 
 .list-items.selected {
-  background: #fff4e6;
-  border-color: #f4a261;
-  box-shadow: 0 4px 12px rgba(244, 162, 97, 0.4);
-  transform: scale(1.02);
+  background: var(--selected-bg);
+  border-color: var(--accent);
+  box-shadow: 0 4px 14px rgba(244, 162, 97, 0.35);
+  transform: scale(1.01);
 }
 
 /* ====== List Header ====== */
@@ -66,21 +78,22 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-weight: 600;
+  font-weight: 700;
   margin-bottom: 6px;
 }
 
 /* ====== List Content ====== */
 .list-content {
-  border: 1px solid #f0e4d7;
+  border: 1px solid var(--card-border);
   padding: 8px;
-  border-radius: 6px;
-  background: #fff;
-  transition: max-height 0.4s ease, background 0.3s ease;
+  border-radius: 8px;
+  background: var(--card-bg);
+  transition: max-height 0.35s ease, background 0.25s ease,
+    border-color 0.25s ease;
   overflow: hidden;
 
   display: flex;
-  justify-content: space-between; /* Align text + delete button side by side */
+  justify-content: space-between; /* text + delete button side by side */
   align-items: center;
   gap: 10px;
 }
@@ -88,6 +101,7 @@
 .list-content.collapsed {
   max-height: 3em;
   display: -webkit-box;
+  line-clamp: inherit;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   text-overflow: ellipsis;
@@ -95,7 +109,7 @@
 }
 
 .list-content.expanded {
-  max-height: 150px;
+  max-height: 160px;
   overflow-y: auto;
 }
 
@@ -103,17 +117,20 @@
 button {
   background: none;
   border: none;
+  color: inherit; /* icons use currentColor */
   cursor: pointer;
   font-size: 18px;
   transition: transform 0.2s ease;
 }
-
 button:hover {
-  transform: scale(1.2);
+  transform: scale(1.08);
+}
+button:active {
+  transform: scale(0.96);
 }
 
 .delete-btn {
-  color: #e63946;
+  color: var(--danger);
   font-size: 20px;
 }
 

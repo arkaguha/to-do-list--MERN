@@ -1,22 +1,87 @@
+/* --- Base reset / typography --- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-
-  /* color-scheme: light dark; */
-  /* color: rgba(255, 255, 255, 0.87); */
-  background-color: #242424;
-
-  font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
-  justify-items: center;
 }
 
-/* body {
-  width: 90%;
-  height: 90vh;
-  border: 1px solid coral;
-} */
+/* Theme vars are set on body so all children inherit */
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  transition: background 0.25s ease, color 0.25s ease;
+}
+
+/* ---------- LIGHT THEME ---------- */
+body.light {
+  --bg: #f6f7fb;
+  --text: #1f2937;
+  --muted: #6b7280;
+
+  --card-bg: #ffffff;
+  --card-border: #e5e7eb;
+  --card-hover-bg: #f9fafb;
+
+  --navbar-bg: #ffffff;
+  --navbar-border: #e5e7eb;
+
+  --header-bg: #f9f4ef;
+  --header-border: #e6ccb2;
+
+  --accent: #f4a261;
+  --accent-strong: #e76f51;
+
+  --danger: #e63946;
+
+  --selected-bg: #fff4e6; /* soft accent wash */
+  --overlay: rgba(0, 0, 0, 0.6);
+  --shadow: rgba(0, 0, 0, 0.12);
+
+  --button-hover: #f3f4f6;
+}
+
+/* ---------- DARK THEME ---------- */
+body.dark {
+  --bg: #0f1115;
+  --text: #f3f4f6;
+  --muted: #9ca3af;
+
+  --card-bg: #1a1d24;
+  --card-border: #2a2f3a;
+  --card-hover-bg: #1f2330;
+
+  --navbar-bg: #12151b;
+  --navbar-border: #2a2f3a;
+
+  --header-bg: #082c3a;
+  --header-border: #293961;
+
+  --accent: #f4a261;
+  --accent-strong: #e76f51;
+
+  --danger: #f87171;
+
+  --selected-bg: rgba(244, 162, 97, 0.12);
+  --overlay: rgba(0, 0, 0, 0.7);
+  --shadow: rgba(0, 0, 0, 0.4);
+
+  --button-hover: #232734;
+}
+
+/* Optional: help inputs, scrollbar, etc. respect theme */
+body.light {
+  color-scheme: light;
+}
+body.dark {
+  color-scheme: dark;
+}

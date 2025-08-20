@@ -9,10 +9,10 @@ export default function Todo({
 }) {
   return (
     <div className="todos-container">
-      <p className="todos-header">To-do's</p>
+      <p className="todos-header">To-do's {`:  ${lists.length}`} </p>
       <div className="todos">
         {lists.length === 0 ? (
-          <p className="empty">No to-do items found</p>
+          <p className="empty">No to-do items found...</p>
         ) : (
           <ol>
             {lists.map((item) => (
@@ -20,15 +20,19 @@ export default function Todo({
                 onClick={() => handleActive(item._id)}
                 key={item._id}
                 className={`list-items ${
-                  activeId === item._id ? "selected fade-in" : "fade-in"
+                  activeId === item._id ? "selected" : ""
                 }`}
               >
                 <div className="list-header">
                   <strong>{item.list_title}</strong>
                   <div className="li-buttons">
                     <button>
-                      {" "}
-                      <input type="checkbox" name="" id="" />
+                      <input
+                        type="checkbox"
+                        name=""
+                        id=""
+                        onChange={/*handleCompleted */ ""}
+                      />
                       <span>Done</span>
                     </button>
                     <button

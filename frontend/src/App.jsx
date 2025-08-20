@@ -2,9 +2,12 @@
 import "./App.css";
 import { useEffect, useState } from "react";
 import axios from "axios";
-const BASE_API = "http://localhost:3000";
 import Todo from "./components/Todo";
 import TodoForm from "./components/TodoForm";
+import Navbar from "./components/Navbar";
+import { useTheme } from "./contexts/ThemeContext";
+
+const BASE_API = "http://localhost:3000";
 
 export default function App() {
   const [lists, setLists] = useState([]);
@@ -12,7 +15,9 @@ export default function App() {
   const [listContent, setListContent] = useState("");
   const [editId, setEditId] = useState(null);
   const [activeId, setActiveId] = useState(null);
-  const [showForm, setShowForm] = useState(false); // 👈 modal toggle
+  const [showForm, setShowForm] = useState(false);
+
+  const { theme } = useTheme();
 
   useEffect(() => {
     fetchTodos();
@@ -33,8 +38,7 @@ export default function App() {
 
   const deleteTodo = async (id) => {
     try {
-      let res = await axios.delete(`${BASE_API}/lists/${id}`);
-      console.log(res);
+      await axios.delete(`${BASE_API}/lists/${id}`);
       if (id === editId) {
         cancelEdit();
       }
@@ -45,18 +49,16 @@ export default function App() {
     }
   };
 
-  // ✅ Edit Todo
   function editTodo(id, list_title, list_content) {
     setListTitle(list_title);
     setListContent(list_content);
     setEditId(id);
-    setShowForm(true); // open modal when editing
+    setShowForm(true);
     if (id !== activeId) {
       handleActive(id);
     }
   }
 
-  // ✅ Add or Update Todo
   const saveTodo = async () => {
     if (!listTitle.trim() || !listContent.trim()) {
       alert("Please fill in both title and content!");
@@ -78,7 +80,7 @@ export default function App() {
       fetchTodos();
       setListTitle("");
       setListContent("");
-      setShowForm(false); // close modal after save
+      setShowForm(false);
     } catch (error) {
       console.error(
         "Error saving list:",
@@ -92,11 +94,12 @@ export default function App() {
     setListTitle("");
     setListContent("");
     setActiveId(null);
-    setShowForm(false); // close modal
+    setShowForm(false);
   };
 
   return (
-    <div className="app">
+    <div className={`app ${theme}`}>
+      <Navbar />
       <Todo
         editTodo={editTodo}
         deleteTodo={deleteTodo}
@@ -105,19 +108,12 @@ export default function App() {
         setActiveId={setActiveId}
         handleActive={handleActive}
       />
-
-      {/* ✅ Floating Add Button */}
       <button className="fab" onClick={() => setShowForm(true)}>
         ＋
       </button>
-
-      {/* ✅ Modal TodoForm */}
       {showForm && (
         <div className="modal-overlay" onClick={cancelEdit}>
-          <div
-            className="modal-content"
-            onClick={(e) => e.stopPropagation()} // prevent close on form click
-          >
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <TodoForm
               editId={editId}
               listTitle={listTitle}

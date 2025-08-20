@@ -10,11 +10,19 @@ export default function TodoForm({
   cancelEdit,
 }) {
   return (
-    <div className={`todo-form slide-in ${editId ? "editing" : ""}`}>
-      {editId ? (
+    <div className={`todo-form slide-in form`}>
+      {/* {editId ? (
         <p className="form-header">Editing: {listTitle}</p>
       ) : (
         <p className="form-header">Add new to-do</p>
+      )} */}
+      {editId ? (
+        <p className="form-header">
+          Editing: <br />
+          {listTitle}
+        </p>
+      ) : (
+        <p className="form-header">Add New To-do</p>
       )}
 
       <input

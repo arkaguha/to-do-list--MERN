@@ -3,23 +3,24 @@
   flex: 1;
   margin: 10px;
   padding: 20px;
-  border: 1px solid bisque;
-  border-radius: 10px;
-  background: #fff;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  background: var(--card-bg);
+  color: var(--text);
+  box-shadow: 0 4px 12px var(--shadow);
   display: flex;
   flex-direction: column;
   gap: 12px;
   opacity: 0;
-  transform: translateX(50px); /* start slightly right */
-  transition: all 0.4s ease;
+  transform: translateX(50px);
+  transition: all 0.3s ease;
 }
 
-/* Fade-in + reset transform when visible */
-.todo-form.editing {
-  background: #fff4e6;
-  border-color: #f4a261;
-  box-shadow: 0 4px 12px rgba(244, 162, 97, 0.4);
+/* Highlight when editing */
+.todo-form.form {
+  background: var(--selected-bg);
+  border-color: var(--accent);
+  box-shadow: 0 4px 18px rgba(244, 162, 97, 0.35);
 }
 
 /* Slide-in animation */
@@ -30,34 +31,42 @@
 
 /* Header */
 .form-header {
-  font-size: 1.2rem;
-  font-weight: bold;
+  font-size: 1.1rem;
+  font-weight: 700;
   text-align: center;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
+  color: var(--text);
 }
 
 /* Inputs */
 .todo-form input,
 .todo-form textarea {
+  color: var(--text);
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
   padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
   font-size: 1rem;
-  transition: border 0.2s ease, box-shadow 0.2s ease;
+  transition: border 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.todo-form input::placeholder,
+.todo-form textarea::placeholder {
+  color: var(--muted);
 }
 
 .todo-form input:focus,
 .todo-form textarea:focus {
-  border-color: #f4a261;
-  box-shadow: 0 0 5px rgba(244, 162, 97, 0.5);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(244, 162, 97, 0.25);
   outline: none;
 }
 
 /* Textarea sizing */
 .todo-form textarea {
   resize: vertical;
-  min-height: 80px;
-  max-height: 200px;
+  min-height: 100px;
+  max-height: 260px;
 }
 
 /* Buttons */
@@ -68,31 +77,33 @@
 }
 
 button.primary {
-  background: #f4a261;
+  background: var(--accent);
   color: white;
   padding: 8px 14px;
-  border-radius: 6px;
+  border-radius: 8px;
   border: none;
   cursor: pointer;
-  transition: background 0.3s ease, transform 0.2s ease;
+  transition: background 0.25s ease, transform 0.1s ease;
 }
-
 button.primary:hover {
-  background: #e76f51;
-  transform: scale(1.05);
+  background: var(--accent-strong);
+}
+button.primary:active {
+  transform: scale(0.98);
 }
 
 button.secondary {
-  background: #ddd;
-  color: #333;
+  background: var(--button-hover);
+  color: var(--text);
   padding: 8px 14px;
-  border-radius: 6px;
-  border: none;
+  border-radius: 8px;
+  border: 1px solid var(--card-border);
   cursor: pointer;
-  transition: background 0.3s ease, transform 0.2s ease;
+  transition: filter 0.2s ease, transform 0.1s ease;
 }
-
 button.secondary:hover {
-  background: #bbb;
-  transform: scale(1.05);
+  filter: brightness(0.98);
+}
+button.secondary:active {
+  transform: scale(0.98);
 }

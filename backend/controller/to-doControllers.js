@@ -49,7 +49,7 @@ exports.editLists = async (req, res) => {
   try {
     const editTodo = await List.findOneAndUpdate(
       { _id: id },
-      { list_title, list_content }
+      { $set: { list_title, list_content } }
     );
 
     if (!editTodo) {
@@ -61,6 +61,32 @@ exports.editLists = async (req, res) => {
       .json({ message: `Todo '${editTodo.list_title}' Todo Updated!` });
   } catch (error) {
     console.error(error);
+    res.status(500).json({ message: error.message });
+  }
+};
+exports.editTodoCompletion = async (req, res) => {
+  const { id } = req.params; // expects /todos/:id
+  const { completion_status } = req.body;
+
+  try {
+    const editTodo = await List.findOneAndUpdate(
+      { _id: id },
+      { $set: { completion_status } }, // safer way
+      { new: true, runValidators: true } // return updated doc
+    );
+
+    if (!editTodo) {
+      return res
+        .status(404)
+        .json({ message: "Todo not found or update failed!" });
+    }
+
+    res.status(200).json({
+      message: `Todo '${editTodo.list_title}' updated successfully!`,
+      editTodo,
+    });
+  } catch (error) {
+    console.error("Error updating todo:", error);
     res.status(500).json({ message: error.message });
   }
 };

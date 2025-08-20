@@ -13,10 +13,11 @@ export default function App() {
   const [lists, setLists] = useState([]);
   const [listTitle, setListTitle] = useState("");
   const [listContent, setListContent] = useState("");
+  // const [completed, setCompleted] = useState();
   const [editId, setEditId] = useState(null);
   const [activeId, setActiveId] = useState(null);
   const [showForm, setShowForm] = useState(false);
-
+  // let completed = false;
   const { theme } = useTheme();
 
   useEffect(() => {
@@ -38,7 +39,7 @@ export default function App() {
 
   const deleteTodo = async (id) => {
     try {
-      await axios.delete(`${BASE_API}/lists/${id}`);
+      await axios.delete(`${BASE_API}/lists/delete/${id}`);
       if (id === editId) {
         cancelEdit();
       }
@@ -66,7 +67,7 @@ export default function App() {
     }
     try {
       if (editId) {
-        await axios.put(`${BASE_API}/lists/${editId}`, {
+        await axios.put(`${BASE_API}/lists/edit/${editId}`, {
           list_title: listTitle,
           list_content: listContent,
         });
@@ -96,6 +97,30 @@ export default function App() {
     setActiveId(null);
     setShowForm(false);
   };
+  const handleCompleted = async (id) => {
+    try {
+      // find current todo
+      const todo = lists.find((t) => t._id === id);
+
+      // toggle value
+      const newStatus = !todo.completion_status;
+      // setCompleted( newStatus);
+      // call backend
+      await axios.put(`${BASE_API}/lists/completed/${id}`, {
+        completion_status: newStatus,
+      });
+
+      //update local state or fetchTodos() both has its pros and cons but latter is slow and 100% consistent
+      setLists((prev) =>
+        prev.map((t) =>
+          t._id === id ? { ...t, completion_status: newStatus } : t
+        )
+      );
+      // fetchTodos();
+    } catch (err) {
+      console.error("Error updating completion:", err);
+    }
+  };
 
   return (
     <div className={`app ${theme}`}>
@@ -107,6 +132,8 @@ export default function App() {
         activeId={activeId}
         setActiveId={setActiveId}
         handleActive={handleActive}
+        // completed={completed}
+        handleCompleted={handleCompleted}
       />
       <button className="fab" onClick={() => setShowForm(true)}>
         ＋

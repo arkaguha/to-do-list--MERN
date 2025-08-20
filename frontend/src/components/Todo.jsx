@@ -6,7 +6,11 @@ export default function Todo({
   deleteTodo,
   handleActive,
   activeId,
+  // completed,
+  handleCompleted,
 }) {
+  // console.log(completed);
+
   return (
     <div className="todos-container">
       <p className="todos-header">To-do's {`:  ${lists.length}`} </p>
@@ -23,17 +27,22 @@ export default function Todo({
                   activeId === item._id ? "selected" : ""
                 }`}
               >
-                <div className="list-header">
+                <div
+                  className={`list-header ${
+                    item.completion_status ? "completed" : ""
+                  }`}
+                >
                   <strong>{item.list_title}</strong>
                   <div className="li-buttons">
-                    <button>
+                    <button onClick={() => handleCompleted(item._id)}>
+                      <span>Done</span>
                       <input
                         type="checkbox"
                         name=""
-                        id=""
-                        onChange={/*handleCompleted */ ""}
+                        id={item._id}
+                        onChange={() => handleCompleted(item._id)}
+                        checked={item.completion_status}
                       />
-                      <span>Done</span>
                     </button>
                     <button
                       onClick={() =>

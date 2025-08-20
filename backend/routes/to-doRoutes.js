@@ -9,8 +9,11 @@ router.get("/lists", toDoControllers.getLists);
 
 router.post("/lists", toDoControllers.postLists);
 
-router.delete("/lists/:id", toDoControllers.deleteLists);
+router.delete("/lists/delete/:id", toDoControllers.deleteLists);
 
-router.put("/lists/:id", toDoControllers.editLists);
+router.put("/lists/edit/:id", toDoControllers.editLists);
+
+router.put("/lists/completed/:id", toDoControllers.editTodoCompletion);
+// router.put("/lists/:id", toDoControllers.editLists);
 
 module.exports = router;

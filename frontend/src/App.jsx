@@ -6,6 +6,7 @@ import Todo from "./components/Todo";
 import TodoForm from "./components/TodoForm";
 import Navbar from "./components/Navbar";
 import { useTheme } from "./contexts/ThemeContext";
+import Footer from "./components/Footer";
 
 const BASE_API = "http://localhost:3000";
 
@@ -153,6 +154,7 @@ export default function App() {
           </div>
         </div>
       )}
+      <Footer />
     </div>
   );
 }

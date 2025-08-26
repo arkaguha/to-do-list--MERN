@@ -1,0 +1,7 @@
+.footer {
+  width: 100%;
+  position: relative;
+  bottom: 0;
+  border-top: 1px solid skyblue;
+  text-align: center;
+}
